@@ -1,0 +1,54 @@
+esphome:
+  name: esphome-web-f57e1e
+  friendly_name: ClockESPHome
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "dqgckqyjWKkpa/7fuW6ARME163OL39t30CCioMbJUqw="
+
+ota:
+
+time:
+  platform: sntp
+  id: timeid
+  timezone: Europe/Budapest
+
+web_server:
+  port: 80
+  version: 1
+
+wifi:
+  ssid: leszmajdkicsihaz
+  password: ****
+
+captive_portal:
+
+display:
+    platform: tm1637
+    id: display1
+    clk_pin: 13
+    dio_pin: 12
+    intensity: 1
+    length: 4
+    inverted: false
+    update_interval: 500ms
+    lambda: |-
+      static int i = 0;
+      i++;
+      auto timestr = id(timeid).now().strftime("%H%M");
+      if ((i % 2) == 0)
+        timestr = id(timeid).now().strftime("%H.%M");
+      it.print(timestr.c_str());
+
+
+
+  
+
+
